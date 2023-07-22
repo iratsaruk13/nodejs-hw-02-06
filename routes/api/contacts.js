@@ -2,14 +2,18 @@ import express from "express";
 
 import contactsController from "../../controllers/contacts-controllers.js";
 
+import { isValidId } from "../../middlewars/index.js";
+
 export const router = express.Router();
 
 router.get("/", contactsController.getAll);
 
-router.get("/:id", contactsController.getById);
+router.get("/:id", isValidId, contactsController.getById);
 
 router.post("/", contactsController.add);
 
-router.delete("/:id", contactsController.deleteById);
+router.delete("/:id", isValidId, contactsController.deleteById);
 
-router.put("/:id", contactsController.updateById);
+router.put("/:id", isValidId, contactsController.updateById);
+
+router.patch("/:id/favorite", isValidId, contactsController.updateFavorite);
