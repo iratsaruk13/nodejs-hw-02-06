@@ -1,18 +1,9 @@
-import Joi from "joi";
+
 import Contact from "../models/contact.js";
 import HttpError from "../helpers/HttpError.js";
 import { ctrlWrapper } from "../decorators/index.js";
+import contactsSchemas from "../schemas/contacts-schema.js";
 
-const contactsAddSchema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required(),
-  phone: Joi.string().required(),
-  favorite: Joi.boolean().messages({message: "missing field favorite"}),
-});
-
-const contactsUpdateFavoriteSchema = Joi.object({
-  favorite: Joi.boolean().required(),
-});
 
 const getAll = async (req, res) => {
   const result = await Contact.find({}, "-createdAt -updatedAt");
@@ -29,7 +20,7 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const { error } = contactsAddSchema.validate(req.body);
+  const { error } = contactsSchemas.contactsAddSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.message);
   }
@@ -49,7 +40,7 @@ const deleteById = async (req, res) => {
 };
 
 const updateById = async (req, res) => {
-  const { error } = contactsAddSchema.validate(req.body);
+  const { error } = contactsSchemas.contactsAddSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.message);
   }
@@ -62,7 +53,7 @@ const updateById = async (req, res) => {
 };
 
 const updateFavorite = async (req, res) => {
-  const { error } = contactsUpdateFavoriteSchema.validate(req.body);
+  const { error } = contactsSchemas.contactsUpdateFavoriteSchema.validate(req.body);
   if (error) {
     throw HttpError(400, error.message);
   }
