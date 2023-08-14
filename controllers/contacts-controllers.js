@@ -33,13 +33,9 @@ const add = async (req, res) => {
     throw HttpError(400, error.message);
   }
   const { _id: owner } = req.user;
-  const {path: oldPath, filename} = req.file;
-  const newPath = path.join(avatarPath, filename);
 
-  await fs.rename(oldPath, newPath);
-  const avatar = path.join("public", "avatars", filename);
 
-  const result = await Contact.create({ ...req.body, avatar, owner });
+  const result = await Contact.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 
