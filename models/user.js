@@ -24,12 +24,22 @@ const userSchema = new Schema(
       enum: ["starter", "pro", "business"],
       default: "starter",
     },
-    avatar: {
+    avatarURL: {
       type: String,
       required: true,
     },
-    token: String,
+    token: {
+      type: String,
+    },
+    verify: {
+      type: Boolean,
+      default: false,
+    },
+    verificationCode: {
+      type: String,
+    },
   },
+
   { versionKey: false, timestamps: true }
 );
 

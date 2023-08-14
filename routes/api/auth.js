@@ -12,6 +12,14 @@ authRouter.post(
   authController.register
 );
 
+authRouter.get("/verify/:verificationCode", authController.verify);
+
+authRouter.post(
+  "/verify",
+  validateBody(usersSchema.userEmailSchema),
+  authController.resendVerifyEmail
+);
+
 authRouter.post(
   "/login",
   validateBody(usersSchema.userLoginSchema),
@@ -22,4 +30,9 @@ authRouter.get("/current", authenticate, authController.getCurrent);
 
 authRouter.post("/logout", authenticate, authController.sighout);
 
-authRouter.patch("/avatars", authenticate, upload.single("avatar"), authController.updateAvatar)
+authRouter.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  authController.updateAvatar
+);
